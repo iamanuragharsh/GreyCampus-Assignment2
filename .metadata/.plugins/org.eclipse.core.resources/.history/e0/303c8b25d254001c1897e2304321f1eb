@@ -1,0 +1,38 @@
+package com.example;
+
+import java.util.List;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.example.dao.DAO;
+import com.example.entity.Employee;
+
+@SpringBootApplication
+public class JdbCtemplateDanvegaApplication {
+	private static DAO<Employee> dao;
+
+	public JdbCtemplateDanvegaApplication(DAO<Employee> dao) {
+		JdbCtemplateDanvegaApplication.dao = dao;
+	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(JdbCtemplateDanvegaApplication.class, args);
+
+//		insert operation
+		System.out.println("----------------------------------Insert Operation Success______________________________");
+		Employee employee = new Employee(11, "danvega", 25000d);
+		dao.create(employee);
+
+//		update operation
+		employee.setSalary(75000d);
+		dao.update(employee, 6);
+//      delete operation
+		dao.delete(4);
+//		Retrieving data from emp_tbl
+		System.out.println("__________________________________ List of Employees____________________________________");
+		List<Employee> employees = dao.findAll();
+		employees.forEach(System.out::println);
+	}
+
+}

@@ -1,0 +1,62 @@
+package com.example.dao;
+
+import java.util.List;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
+
+import com.example.entity.Employee;
+
+@Component
+//@AllArgsConstructor
+public class EmployeeDAO implements DAO<Employee> {
+
+	private JdbcTemplate jdbcTemplate;
+
+	public EmployeeDAO(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+	RowMapper<Employee> rowMapper = (rs, rowNum) -> {
+		Employee employee = new Employee();
+		employee.setEno(rs.getInt("eno"));
+		employee.setName(rs.getString("name"));
+		employee.setSalary(rs.getDouble("salary"));
+		return employee;
+	};
+
+	@Override
+	public List<Employee> findAll() {
+
+		String sql = "SELECT * from emp_tbl";
+		return jdbcTemplate.query(sql, rowMapper);
+	}
+
+	@Override
+	public void create(Employee employee) {
+
+		String sql = "INSERT into emp_tbl(eno,name,salary) values(?,?,?)";
+		int insert = jdbcTemplate.update(sql, employee.getEno(), employee.getName(), employee.getSalary());
+		System.out.println(insert + "rows inserted");
+	}
+
+	@Override
+	public void update(Employee employee, int eno) {
+		String sql = "update emp_tbl set eno = ?, name = ?, salary = ? where eno = ?";
+		int update = jdbcTemplate.update(sql, employee.getEno(), employee.getName(), employee.getSalary(), eno);
+		if (update == 1) {
+
+			System.out.println(update + "row updated");
+		}
+	}
+
+	@Override
+	public void delete(int eno) {
+		String sql = "delete from emp_tbl where eno = ?";
+		int delete = jdbcTemplate.update(sql, eno);
+		if (delete == 1) {
+			System.out.println(delete + "rows deleted");
+		}
+	}
+}

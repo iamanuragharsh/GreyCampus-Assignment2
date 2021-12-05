@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;JDBCtemplateDANVEGA&apos; to &apos;GreyCampusAssig2&apos;" description="Rename resource &apos;JDBCtemplateDANVEGA&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/JDBCtemplateDANVEGA" name="GreyCampusAssig2" stamp="1638719203840" updateReferences="true"/>
+</session>

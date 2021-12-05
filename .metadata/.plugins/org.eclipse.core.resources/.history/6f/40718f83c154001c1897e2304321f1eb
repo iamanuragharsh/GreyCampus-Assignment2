@@ -1,0 +1,18 @@
+package com.example.entity;
+
+import org.springframework.stereotype.Repository;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Repository
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
+public class Employee {
+
+	private int eno;
+	private String name;
+	private Double salary;
+}

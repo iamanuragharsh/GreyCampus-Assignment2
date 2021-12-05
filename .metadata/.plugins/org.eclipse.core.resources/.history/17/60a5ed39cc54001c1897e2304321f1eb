@@ -1,0 +1,51 @@
+package com.example.dao;
+
+import java.util.List;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
+
+import com.example.entity.Employee;
+
+@Component
+//@AllArgsConstructor
+public class EmployeeDAO implements DAO<Employee> {
+
+	private JdbcTemplate jdbcTemplate;
+
+	public EmployeeDAO(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+	RowMapper<Employee> rowMapper = (rs, rowNum) -> {
+		Employee employee = new Employee();
+		employee.setEno(rs.getInt("eno"));
+		employee.setName(rs.getString("name"));
+		employee.setSalary(rs.getDouble("salary"));
+		return employee;
+	};
+
+	@Override
+	public List<Employee> findALl() {
+
+		String sql = "SELECT * from emp_tbl";
+		return jdbcTemplate.query(sql, rowMapper);
+	}
+
+	@Override
+	public void create(Employee t) {
+
+	}
+
+	@Override
+	public void update(Employee t, int eno) {
+
+	}
+
+	@Override
+	public void delete(int eno) {
+
+	}
+
+}
